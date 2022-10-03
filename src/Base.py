@@ -18,18 +18,20 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', datefmt=
 def XXXBase(args):
     # tokenizer
     # logging.debug(args.tokenizer_path)
-    # tokeniser = AutoTokneizer.from_pretrained(args.tokneizer_path)
+    # tokeniser = AutoTokenizer.from_pretrained(args.tokenizer_path)
     ############
     # training sample
     # train_sample = Datasets.prepare_training_samples()
     ############
     # datasets
     # train_datasets = Datasets.BaseDatasets()
+    # valid_datasets = Datasets.BaseDatasets()
     # train_iter = torch.utils.data.DataLoader(train_datasets, batch_size=args.train_batch_size, shuffle=True)
     # logging.info(f"Train Size: {len(train_iter)}")
     ############
     # trainer
     # trainer = Trainer.BaseTrainer(args)
+    # trainer.trainer_init(len(train_iter), valid_datasetes)
     ############    
     for epoch in range(args.epoch):
         logging.info(f"Start Epoch: {epoch}")

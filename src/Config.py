@@ -1,10 +1,7 @@
-
-
 import argparse
 
 
-def BaseConfig():
-    parser = argparse.ArgumentParser()
+def BaseConfig(parser):
     parser.add_argument("--train", action="store_true")
     parser.add_argument("--predict", action="store_true")
     parser.add_argument("--debug", action="store_true")
@@ -20,6 +17,7 @@ def BaseConfig():
     parser.add_argument("--valid_batch_size", type=int, default=32)
     parser.add_argument("--scheduler", type=str, default="CosineAnnealingLR")
     parser.add_argument("--model_name", type=str, default="v1")
+    parser.add_argument("--mode", type=str, default="base")
     # Trainer Config
     parser.add_argument("--lr", type=float, default=1e-2)
     parser.add_argument("--min_lr", type=float, default=1e-4)
@@ -59,6 +57,24 @@ def BaseConfig():
     parser.add_argument("--da_path", type=str)
     parser.add_argument("--train_all", action="store_true")
     parser.add_argument("--patience_maxn", type=int, default=10)
-    # Task Config
+    return parser
+
+
+def GenerateConfig(parser):
+    parser.add_argument("--max_length", type=int, default=32)
+    parser.add_argument("--min_length", type=int, default=0)
+    parser.add_argument("--do_sample", action="store_true")
+    parser.add_argument("--early_stop", action="store_true")
+    parser.add_argument("--num_beams", type=int, default=0)
+    parser.add_argument("--temperature", type=float, default=1.0)
+    parser.add_argument("--top_k", type=int, default=15)
+    parser.add_arugment("--top_p", type=float, default=1.0)
+    return parser
+
+
+def Config():
+    parser = argparse.ArgumentParser()
+    parser = BaseConfig(parser)
+    parser = GenerateConfig(parser)
     args = parser.parse_args()
     return args

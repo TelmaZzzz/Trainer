@@ -12,7 +12,6 @@ class ModelConfig(object):
         self.pretrain_path = args.pretrain_path
         self.hidden_dropout_prob = 0.1
         self.layer_norm_eps = 1e-7
-        self.num_labels = args.num_labels
         self.device = args.device
         self.dropout = args.dropout
 

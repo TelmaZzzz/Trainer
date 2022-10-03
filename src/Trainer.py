@@ -48,6 +48,30 @@ class TrainerConfig(object):
         self.patience_maxn = args.patience_maxn
 
 
+class GenerateConfig:
+    def __init__(self, args):
+        self.max_length = args.max_length
+        self.min_length = args.min_length
+        self.do_sample = args.do_sample
+        self.early_stop = args.early_stop
+        self.num_beams = args.num_beams
+        self.temperature = args.temperature
+        self.top_k = args.top_k
+        self.top_p = args.top_p
+
+    def __call__(self):
+        return {
+            "max_length": self.max_length,
+            "min_length": self.min_length,
+            "do_sample": self.do_sample,
+            "early_stop": self.early_stop,
+            "num_beams": self.num_beams,
+            "temperature": self.temperature,
+            "top_k": self.top_k,
+            "top_p": self.top_p,
+        }
+
+
 class BaseTrainer(object):
     def __init__(self, args):
         self.predict_loss = 0
@@ -282,3 +306,24 @@ class BaseTrainer(object):
 
     def metrics(self, preds, valid_samples):
         ValueError("Write Your Own Metrics Function")
+
+
+class BaseGenerateTrainer(BaseTrainer):
+    def __init__(self, args):
+        super().__init__(args)
+        self.generate_config = GenerateConfig(args)
+    
+    def generate(self, batch):
+        input_ids = batch["input_ids"].to(self.device)
+        attention_mask = batch["attention_mask"].to(self.device)
+        return self.model.generate(input_ids=input_ids, attention_mask=attention_mask, **self.generate_config())
+
+    @Utils.timer
+    @torch.no_grad()
+    def eval_step(self, valid_iter):
+        preds = []
+        for batch in valid_iter:
+            logits = self.generate(batch).cpu()
+            preds.append(logits)
+        preds = torch.cat(preds, dim=0)
+        return preds
