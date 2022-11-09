@@ -18,7 +18,7 @@ logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', datefmt=
 def XXXBase(args):
     # tokenizer
     # logging.debug(args.tokenizer_path)
-    # tokeniser = AutoTokenizer.from_pretrained(args.tokenizer_path)
+    # tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_path)
     ############
     # training sample
     # train_sample = Datasets.prepare_training_samples()
