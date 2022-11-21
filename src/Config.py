@@ -68,7 +68,7 @@ def GenerateConfig(parser):
     parser.add_argument("--num_beams", type=int, default=0)
     parser.add_argument("--temperature", type=float, default=1.0)
     parser.add_argument("--top_k", type=int, default=15)
-    parser.add_arugment("--top_p", type=float, default=1.0)
+    parser.add_argument("--top_p", type=float, default=1.0)
     return parser
 
 

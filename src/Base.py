@@ -91,7 +91,7 @@ def predict(args):
     raise
 
 if __name__ == "__main__":
-    args = Config.BaseConfig()
+    args = Config.Config()
     Utils.set_seed(args.seed)
     if not args.debug:
         logging.getLogger().setLevel(logging.INFO)
