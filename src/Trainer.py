@@ -324,6 +324,9 @@ class BaseGenerateTrainer(BaseTrainer):
         preds = []
         for batch in valid_iter:
             logits = self.generate(batch).cpu()
-            preds.append(logits)
-        preds = torch.cat(preds, dim=0)
+            predist = [self.tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=False) for g in logits]
+            preds.extend(predist)
         return preds
+    
+    def set_tokenizer(self, tokenizer):
+        self.tokenizer = tokenizer
