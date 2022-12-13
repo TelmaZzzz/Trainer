@@ -142,7 +142,7 @@ class BaseTrainer(object):
                 "params": [
                     p
                     for n, p in self.model.named_parameters()
-                    if n in no_decay
+                    if any(nd in n for nd in no_decay)
                 ],
                 "weight_decay": 0,
                 "lr": self.trainer_config.lr,
@@ -151,7 +151,7 @@ class BaseTrainer(object):
                 "params": [
                     p
                     for n, p in self.model.named_parameters()
-                    if n not in no_decay
+                    if not any(nd in n for nd in no_decay)
                 ],
                 "weight_decay": self.trainer_config.weight_decay,
                 "lr": self.trainer_config.lr,
